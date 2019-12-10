@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<title>My Personal Tour - DEMOSTRACAO</title>
+	<meta charset="utf-8" />
+	<!-- favicon -->
+	<link rel="apple-touch-icon" sizes="76x76" href="_assets/_img/favicon.png">
+	<link rel="icon" type="image/png" href="_assets/_img/favicon.png">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<!-- og tag share facebook -->
+	<meta property="og:locale" content="pt_BR">
+	<meta property="og:url" content="index.html">
+	<meta property="og:title" content="MPT">
+	<meta property="og:site_name" content="MPT">
+	<meta property="og:description" content="My Personal Tour - 360">
+	<meta property="og:image" content="_assets/_img/favicon.png">
+	<meta property="og:image:secure_url" content="_assets/_img/favicon.png">
+	<meta property="og:image:type" content="image/jpeg">
+	<meta property="og:image:width" content="150"> <!-- pixel -->
+	<meta property="og:image:height" content="150"> <!-- pixel -->
+	<meta property="og:type" content="website">
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+	<!-- mobile -->
+	<meta name="apple-mobile-web-app-capable" content="yes"> 
+	<meta name="mobile-web-app-capable" content="yes">
+	<!-- script CSS -->
+	<!-- <link href="_assets/_css/estilompt.min.css" rel="stylesheet" type="text/css" /> -->
+	<link href="_assets/_scripts_padrao/estilompt.css" rel="stylesheet" type="text/css" />
+	<!-- script JQUERY -->
+	<script src="_assets/_js/jquery-3.1.1.min.js"></script>
+</head>
+<body onselectstart="return false" oncontextmenu="return false" ondragstart="return false">
+	<!-- CONT_FIXED -->
+
+		<a href="http://www.iliontecnologia.com.br" target="_blank" class="mptide_watermark" id="mptide_watermark">	<!-- marca d'água -->
+			Powered by MPT 360
+			<img src="_assets/_img/mptide_watermark.png" class="mptide_watermark_img" />
+		</a>
+		<div id="mptide_progress"></div>	<!-- progress bar -->
+		<div class="mptide_cover">	<!-- cover for load -->
+			<h3 class="mptide_txt_load"><img src="_assets/_img/logotipo_mpt_negat.png" class="mptide_img_load">CARREGANDO...</h3>
+		</div>
+		<div id="mptide_modal_o" class="mptide_modal_o">	<!-- Modal open midia -->
+			<span class="mptide_modal_o_close" id="mptide_modal_o_close">&times;</span>
+			<img class="mptide_modal_o_content" id="mptide_modal_o_img">
+			<div id="mptide_modal_o_caption"></div>
+		</div>
+		<button class="mptide_btn mptide_btn_vr" id="mptide_btn_vr" disabled="disabled" title="Modo VR desativado"></button>	<!-- btn vr -->
+		<span class="mptide_tag_aviso" id="mptide_tag_aviso">Vire o seu dispositivo</span>	<!-- span notice -->
+		<button class="mptide_btn mptide_btn_acess" id="mptide_btn_acess" title="Clique para ativar acessibilidade"></button>	<!-- btn acessibilidade -->
+		<span id="mptide_tooltip_span"></span>	<!-- tooltip span -->
+		<div class="mptide_modal_acess" id="mptide_modal_acess">	<!-- modal acessibilidade -->
+			<audio id="mptide_aud_acess">
+				<source src="_assets/_img/acessibilidade.mp3" type="audio/mpeg">
+				<source src="_assets/_img/acessibilidade.ogg" type="audio/ogg"> <!-- ogg p/ firefox -->
+			</audio> <!-- fim tag audio -->
+			<span class="mptide_modal_acess_close" id="mptide_modal_acess_close">&times;</span> <!-- x -->
+			<p>Olá bem vindo ao modo de acessibilidade do 360. Serei sua guia por este ambiente, que tal?
+			Ao concordar, a cada esfera que entrar eu vou descrever a casa para você saber como ela é. Se passar por uma seta eu vibrarei o seu dispositivo para saber que está em cima dela. Clique na seta para mudar a esfera,( ou caso use um óculos VR espere em cima da seta). Vamos começar?</p>
+			<footer class="mptide_modal_acess_footer">
+				<button class="mptide_modal_acess_btn_ok" id="mptide_modal_acess_btn_ok">ok</button>
+			</footer>
+		</div>
+		<div id="mptide_bp_map">	<!-- map blueprint -->
+			<img src="_assets/_img/map.png" id="mptide_bp_map_img" alt="mapa do ambiente" />
+		</div>
+
+	<!-- fim CONT_FIXED -->
+
+	<div class="mptide_container" id="mptide_container">	<!-- user_cont -->
+
+		<!-- PRIMEIRA ESFERA -->
+		<!-- audio de acessibilidade -->
+		<audio class="mptide_aud_sph">
+			<source src="_assets/_img/sala.mp3" type="audio/mpeg">
+			<source src="_assets/_img/sala.ogg" type="audio/ogg"> <!-- ogg p/ firefox -->
+		</audio> <!-- fim tag audio -->
+
+		<!-- img varanda -->
+		<div id="mptide_boxpin_sph_1_img_1" class="mptide_boxpin mptide_boxpin_img">
+			<div class="mptide_boxpin_cont"> <!-- container q ficara com a imagem, iframe dentro da div.. dentro do pino-->
+				<img src="_assets/_img/varanda.jpg" alt="Ampla Varanda c/ vista para rua" onclick="mptide_function_js_openimgmodal('_assets/_img/varanda.jpg', 'Ampla Varanda c/ vista para a rua.')" />
+			</div>
+			<div class="mptide_title">Ampla Varanda c/ vista para a rua.</div>
+			<div class="mptide_text">Varanda com vista para a rua coronel fulano. Piso em MDF da cor bege, possui Xm² para uma melhor acomodação.</div>
+		</div>
+
+		<!-- audio-1 -->
+		<div id="mptide_boxpin_sph_1_aud_1" class="mptide_boxpin mptide_boxpin_audio">
+			<audio preload="auto" controls controlsList="nodownload" class="mptide_player">
+				<source src="_assets/_img/audio.mp3" type="audio/mpeg">
+				<source src="_assets/_img/audio.ogg" type="audio/ogg"> <!-- ogg p/ firefox -->
+				Seu navegador não suporta a tag de áudio ou vídeo.
+			</audio>
+			<div class="mptide_title">Áudio sobre o teto</div>
+			<div class="mptide_text">Uma breve explicação sobre o material feito para o rebaixamento e iluminação do teto: O forro do teto é feito de bla bla bla. Uma breve explicação sobre o material feito para o rebaixamento e iluminação do teto: O forro do teto é feito de bla bla bla </div>
+		</div>
+
+		<!-- pino localizacao -->
+		<div id="mptide_boxpin_sph_1_fram_1" class="mptide_boxpin mptide_boxpin_frame">
+			<div class="mptide_boxpin_cont">
+				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d470410.4644203711!2d-43.7285291259311!3d-22.910355243518918!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9bde559108a05b%3A0x50dc426c672fd24e!2sRio+de+Janeiro%2C+RJ!5e0!3m2!1spt-BR!2sbr!4v1477193178220" width="100%" frameborder="0" class="mptide_boxpin_iframe" ></iframe>
+			</div>
+			<div class="mptide_title">Rio de Janeiro, RJ</div>
+			<div class="mptide_text">Este Apartamento se localiza na ________________, Bairro __________</div>
+		</div>
+
+		<!-- SEGUNDA ESFERA -->
+		<!-- audio de acessibilidade -->
+		<audio class="mptide_aud_sph">
+			<source src="_assets/_img/cozinha.mp3" type="audio/mpeg">
+			<source src="_assets/_img/cozinha.ogg" type="audio/ogg"> <!-- ogg p/ firefox -->
+		</audio> <!-- fim tag audio -->
+			<!-- pino dentro do javascript, apenas texto -->
+
+		<!-- TERCEIRA ESFERA -->
+		<!-- audio de acessibilidade -->
+		<audio class="mptide_aud_sph">
+			<source src="_assets/_img/quarto.mp3" type="audio/mpeg">
+			<source src="_assets/_img/quarto.ogg" type="audio/ogg"> <!-- ogg p/ firefox -->
+		</audio> <!-- fim tag audio -->
+
+		<!-- QUARTA ESFERA -->
+		<!-- audio de acessibilidade -->
+		<audio class="mptide_aud_sph">
+			<source src="_assets/_img/banheiro.mp3" type="audio/mpeg">
+			<source src="_assets/_img/banheiro.ogg" type="audio/ogg"> <!-- ogg p/ firefox -->
+		</audio> <!-- fim tag audio -->
+		<!-- video -->
+		<div id="mptide_boxpin_sph_4_fram_1" class="mptide_boxpin mptide_boxpin_frame">
+			<div class="mptide_boxpin_cont">
+				<iframe width="100%" src="https://www.youtube.com/embed/7nUGfseBplQ" frameborder="0" class="mptide_boxpin_iframe" allowfullscreen></iframe>
+			</div>
+			<div class="mptide_title">Banheira</div>
+			<div class="mptide_text">Banheira com acabamento em Mármore e com água quente. Um video breve sobre sua apresentação</div>
+		</div>
+
+	</div>	<!-- FIM user_cont -->
+
+<!-- scripts JS -->
+<script src="_assets/_js/three.min.js"></script>
+<!-- <script src="_assets/_js/panolens.min.js"></script> -->
+<script src="_assets/_scripts_padrao/Panolens.js"></script>
+<script src="_assets/_scripts_padrao/sistem.js"></script>
+<script src="_assets/_js/jquery.vibrate.min.js" defer="defer"></script>
