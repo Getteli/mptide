@@ -1,0 +1,68 @@
+Banco de dados mpt ide
+Tabelas -
+	master_key - conta da empresa onde podemos excluir ou ter toda as acoes com todos usuarios
+	user - dados do usuario
+	user_tour - tour's dos usuarios (um usuario pode ter mais de 1 tour, mas um tor apenas ligado a um usuario)
+	log_general - log com todas as acoes de usuarios ou nossas
+(
+Ao fazer cadastro : escolher se é institucional/empresa ou pessoa física 
+(Se for i/e criar um número de licença e não cadastra direto no usuário.) (se for pessoal, faz o cadastro direto no usuário)
+)
+
+master_key -
+	id_mk (int)(11) (not null)
+	name_mk (varchar)(50) (not null)
+	email_mk (varchar)(40) (not null)
+	pass_mk (char)(20) (not null)
+	cnpj_mk (char)(18)
+	ddd_mk (varchar)(3)
+	contact_mk (char)(11)
+	active_mk (int)(1) (not null)
+	licence_mk (char)(17)
+	date_mk (datetime)(TIMESTAMP) (not null)
+
+user - 
+	id_user (int)(11) (not null)
+	email_user (varchar)(40) (not null)
+	pass_user (char)(20) (not null)
+	name_user (varchar)(50) (not null)
+	CPF_user (char)(14)
+	CEP_user (char)(9)
+	ddd_user (varchar)(3)
+	contact_user (char)(11)
+	active_user (int)(1) (not null)
+	date_user (datetime)(TIMESTAMP) (not null)
+	licence_user_fk (char)(17) (é fk)
+	mk_user_fk (int)(11) (é fk)
+
+user_tour -
+	id_tour (int)(11) (not null)
+	title_tour (varchar)(30) (not null)
+	desc_tour (varchar)(150)
+	sphere_tour (longtext)(ARRAY) (not null) : id - name - img - aud.path
+	arrow_tour (longtext)(ARRAY) : origem(sphere_tour-id) - lat,long - sphere - tooltip
+	pin_tour (longtext)(ARRAY) : origem(sphere_tour-id) - lat,long - div#id - tooltip - audio - tipo.pin
+	blueprint (varchar)(140) - img
+	option_us_tour (char)(17) (not null) - (se quer o mapa, modo vr e acessibilidade)
+	active_tour (int)(1) (not null)
+	date_tour (datetime)(TIMESTAMP) (not null)
+	user_tour_fk (é fk) (not null)
+
+log_general -
+	id_lg (int)(11) (not null)
+	action_lg (char)(6) (not null)
+	date_lg (datetime)(TIMESTAMP) (not null)
+	licence_lg_fk (char)(17) (é fk)
+	mk_lg_fk (int)(11) (é fk)
+	user_lg_fk (int)(11) (é fk)
+	tour_lg_fk (int)(11) (é fk)
+
+(
+as midias não serão armazenadas no banco, mas sim os seus caminhos para o servidor
+)
+(
+active(s) - 0 - não pago / falta pagar
+			1 - pago / ativo
+			2 - desativado / falta de pagamento ou opção propria
+)
+	APOS O BANCO ESTAR DEFINIDO CERTINHO, EXPORT E SALVE JUNTO NA PASTA}

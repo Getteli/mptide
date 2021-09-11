@@ -1,0 +1,213 @@
+IDE MPT360
+
+coisas feitas -
+	logica de script (os codigos estao mais abaixo)
+		PEGAR OS DADOS DO FORMULARIO EM ARRAY PARA MONTAR O SCRIPT - FEITO
+		PEGAR OS DADOS DO FORMULARIO EM ARRAY SUBIR PARA UM BANCO VIA TEXT - FEITO
+		PEGAR OS DADOS DO BANCO(TXT) E POR/TRANSFORMAR NO/EM ARRAY PARA O FRONT DO USUARIO - FEITO
+	MODELAR E DESENVOLVER O BANCO - Criar um banco de dados que vai conter o mesmo conteudo que o script do tour de cada usuario, para poder editar e saber onde editar - FEITO
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+FRONTEND -
+	analisar e concordar com a forma de monetização, planos e explicações - NOS MESMOS VAMOS DECIDIR
+	um canal de tutoriais
+	Um design para criar todo o front com UX, intuitivo - EU MESMO FAREI
+	CRIAR ESTILO/WARFRAME/DESIGN ( ideias para o design:
+		fazer como se fosse blocos para dar a entender essa ideia desde o design do site ate a ideia de criar o tour, por blocos (ex: bloco do menu, rodapé, "corpo" e etc).
+		criar os elementos antes (select, spinner, button's, fonte, inputs..).
+		testar cada detalhe para ver se esta responsivo
+		css limpo e bem organizado
+		deixar apenas ate certo ponto, se for mobile mostra uma tela diferenciada dizendo q para melhor experience para criar a esfera ir para desk
+		decidir se vai ter varias paginas ou dentro.. pensar nisso. OU fazer a ideia, fazer uma pagina pro menu, outra pro rodapé e chama-las na pagina, facil edição!!
+
+	)
+	Criar de certa forma um front para uma programação em BLOCOS, montando um script como um texto..
+	CRIAR UM SEGUNDO PAINEL DE CONTROLE OU UMA ABA NAO SEI, PARA A CONFIGURAÇÃO E MANUTENÇÃO DE TODOS OS USUARIOS PARA NOS (ILION)
+
+BACKEND -
+	Desenvolver tudo com PHP e usar javascript para demonstrar na tela
+	CHAGAS vendo a criação de audio para salvar em um campo e chama-lo para seu script
+	criar uma opção para "esconder"/"não querer" a funcao de acessibilidade
+	CRIAR FUNÇÕES SOBRE CADA TIPO DE PINO, e então ao precisar dele, chamo lanço as variaveis (id, posicao, texto e tudo mais) e retorno um novo pino
+	AUDIO PEGO PELA ORDEM DE CLASS, ORDEM == A ORDEM DA ESFERA Q O USUARIO ESCOLHE - O som de cada esfera fica no index, mas a minha unica referencia é a sua ordem (pego via class) e defino qual ordem é cada esfera.. no texto e no formulario para criar esta ordem farei assim, quando definir a esfera de inicio definirei o seu audio como 0 (primeiro), o resto cada um tera seu numero e por tanto sera a ordem de seus audios feito no TEXTO, depois q for posto o .js ai deve ficar certo.. A ORDEM DOS AUDIOS ESTÁ LIGADA DIRETAMENTE A ORDEM DAS ESFERAS
+
+bibliografia para testes:
+FAZER O SCRIPT VIA PHP (como um txt, depois só por .js)
+https://www.youtube.com/watch?v=GDQ_unnsj74 (PHP make file, edit e delet p1)
+https://www.youtube.com/watch?v=bN4bc0cQM-M (pt2)
+https://www.youtube.com/watch?v=nwJ-rPeYk1E (pt3)
+
+APOS ARQUIVO FEITO, MINIFICAR PARA FICAR NO SERVIDOR (OU USAR UMA FORMA DE MINIFICAR EM SEU HTACESS, QUE MINIFICA ANTES DE SER ENVIADO PARA O USUARIO EM SEU BROWSER)
+https://github.com/matthiasmullie/minify
+
+SITE PARA CRIAR O AUDIO E BAIXAR:
+http://www.sufficit.com.br/telefonia/texttospeech
+
+----------------------------------------------------------------------------------------------------------
+
+PEGAR OS DADOS DO FORMULARIO EM ARRAY PARA MONTAR O SCRIPT ( serve tambem para pegar os dados do array e por no formulario para exibição/edição ):
+
+foreach($esfera as $i => $item) { // passa por todas as esferas
+	if ( !empty( $item["name"] ) ) { // se a esfera existir continue
+		print create_sphere($item["id"], $item["name"]); // gera a esfera
+		foreach($pin as $key => $value){ // passa por todos os pinos
+			if ( !empty($value["tipo"]) && $value["origem"] == $item["id"] ) { // se o pino existir E a origem do pino for igual a esfera
+				echo "O Pino(s): " . $value["tipo"] ."<br>";
+			}
+		}
+	}
+}
+
+function create_sphere($sph_id,$sph_img){
+	$var_name_sph = "sphere".$sph_id;
+	$path_img_sph = $sph_img;
+
+	$sph_ready = "
+	var ".$var_name_sph." = new PANOLENS.ImagePanorama( '".$path_img_sph."' );
+	".$var_name_sph.".addEventListener( 'enter', function(){
+		mptide_v_esf = 1;
+		mptide_function_js_onenter();
+	});
+	".$var_name_sph.".addEventListener( 'progress', mptide_function_js_onprogress );
+	".$var_name_sph.".addEventListener( 'load', function(){
+		mptide_v_prog = null;
+	});
+	".$var_name_sph.".addEventListener( 'enter', function(){
+		if (mptide_v_prog == 1) {
+			mptide_function_js_onout();
+		}
+	});
+	".$var_name_sph.".addEventListener( 'load', function(){
+		mptide_v_prog = 1;
+	});
+	";
+
+	return $sph_ready;
+}
+
+--------------------------------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------------------------------
+
+PEGAR OS DADOS DO FORMULARIO EM ARRAY SUBIR PARA UM BANCO VIA TEXT (cada tipo (esfera,pino,...), terá a sua funcao ):
+
+function convert_string($array_sph){
+	$result_sph_string = "";
+	foreach($array_sph as $i => $item) { // passa por todas as esferas
+		$result_sph_string .=  " / ";
+		$result_sph_string .=  "ordem:".$i." ";
+		$result_sph_string .=  "id:".$item['id']." ";
+		$result_sph_string .=  "nome:".$item['name']." ";
+	}
+	return $result_sph_string;
+}
+
+--------------------------------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------------------------------
+
+PEGAR OS DADOS DO BANCO(TXT) E POR/TRANSFORMAR NO/EM ARRAY PARA O FRONT DO USUARIO (cada tipo (esfera,pino,...), terá a sua funcao, pois precisará que chame o seu input em sua propria parte do form e etc ):
+
+
+function convert_array($string_sph){
+	$array_sph_ext = explode("|",$string_sph);
+	$array_new = array();
+	foreach ($array_sph_ext as $array_sph_int){
+		if ( !empty( $array_sph_int ) ) {
+			$array_new[] = explode(",",$array_sph_int);
+		}
+	}
+	return $array_new;
+}
+
+$novo_array = convert_array($sph_string);
+
+print_r($novo_array);
+
+--------------------------------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------------------------------
+
+COMO CRIAR NO FORMULARIO, AS ESFERAS E OS PINOS DINAMICAMENTE (usar provavelmente para criar as outras coisas (setas,e outros campos) ):
+
+<form action="tst.php" method="POST" id="form">
+	<button type="button" id="create_sph" title="gerar esfera">+ ESFERA</button><br/>
+	<h3>Esferas</h3>
+	<div id="box"></div>
+	<input type="submit" Value="Criar">
+</form>
+
+
+<script type="text/javascript" >
+$( document ).ready(function() {
+	// esfera
+	var i_s = 0;
+	var i_p = 0;
+	var form = document.getElementById('box');
+	var create_sph = document.getElementById('create_sph');
+	create_sph.onclick = function() {
+		// cria input para esfera
+		var x_sph = document.createElement('input');
+		var x = document.createElement('input');
+		var div = document.createElement('div');
+		div.setAttribute('id', 'box_sphere'+i_s);
+
+		x_sph.setAttribute('type', 'text');
+		x_sph.setAttribute('readonly', '');
+		x_sph.setAttribute('name', 'sphere['+i_s+'][id]');
+		x_sph.setAttribute('value', 'sphere'+i_s);
+
+		x.setAttribute('type', 'text');
+		x.setAttribute('name', 'sphere['+i_s+'][name]');
+		x.setAttribute('id', 'sphere'+i_s);
+		x.setAttribute('class', 'form-control');
+		x.setAttribute('placeholder', 'ESFERA');
+		// crio btn add pino a esfera
+		var b = document.createElement('button');
+		b.setAttribute('type', 'button');
+		b.setAttribute('class', 'create_pin');
+		b.setAttribute('title', 'gerar pino');
+		b.setAttribute('value', 'sphere'+i_s);
+		b.innerHTML = "+ PINO";
+		form.appendChild(div);
+		div.appendChild(x_sph);
+		div.appendChild(x);
+		div.appendChild(b);
+
+	var alvo = document.getElementsByClassName('create_pin')[i_s].value;
+	document.getElementsByClassName('create_pin')[i_s].addEventListener("click", function(){
+		var c = document.createElement('input'); // origem do pino, qual esfera ele pertence
+		var cpin = document.createElement('input'); // pino
+
+		var divc = document.createElement('div');
+		divc.setAttribute('id', 'box_pins'+i_p);
+
+		c.setAttribute('type', 'text');
+		c.setAttribute('readonly', '');
+		c.setAttribute('name', 'pin['+i_p+'][origem]');
+		c.setAttribute('class', 'form-control');
+		c.setAttribute('class', 'pin');
+		c.setAttribute('placeholder', 'ORIGEM');
+		c.setAttribute('value', alvo );
+
+		cpin.setAttribute('type', 'text');
+		// cpin.setAttribute('name', 'pin["pin'+i_p+'"]["tipo"]');
+		cpin.setAttribute('name', 'pin['+i_p+'][tipo]');
+		cpin.setAttribute('class', 'form-control');
+		cpin.setAttribute('class', 'pin');
+		cpin.setAttribute('placeholder', 'PIN');
+
+		div.appendChild(divc);
+		divc.appendChild(c);
+		divc.appendChild(cpin);
+		i_p++;
+	});
+	
+	i_s++;
+	}
+});
+
+--------------------------------------------------------------------------------------------------------
